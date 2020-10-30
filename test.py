@@ -12,7 +12,7 @@ logger.addHandler(stream_handler)
 
 class LampdaTestCase(unittest.TestCase):
 
-    def test_create_user_lambda(self):
+    def test_list_questions(self):
         event = {
                     "question": "zigs"
                 }
