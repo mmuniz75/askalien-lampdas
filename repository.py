@@ -31,6 +31,31 @@ def get_questions(question):
     return questions
 
 
+def get_detail(id):
+    conn = get_connetion()
+    query = """select content,
+                       videonumber as number,
+                       creationdate as date,
+                       url as link 
+                       from Answer a INNER JOIN Video v on (a.videonumber=v.id)
+               where a.id=%s"""
+
+    with conn.cursor() as cur:
+        cur.execute(query, (id, ))
+        row = cur.fetchone()
+        answer = {
+            "content": row[0],
+            "number": row[1],
+            "date": row[2].strftime("%m/%d/%Y"),
+            "link": row[3]
+        }
+        cur.close()
+
+    conn.close()
+
+    return answer
+
+
 def get_connetion():
     conn_string = "host=%s user=%s password=%s dbname=%s" % \
                   (db_host, db_username, db_user_pwd, db_name)
