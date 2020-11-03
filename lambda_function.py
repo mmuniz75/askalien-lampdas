@@ -1,5 +1,5 @@
 import logging
-import repository
+import question_repository
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -8,7 +8,7 @@ logger.setLevel(logging.INFO)
 def lambda_handler(event, context):
     question = event["question"]
     question = format_db_search(question)
-    return repository.get_questions(question)
+    return question_repository.get_questions(question)
 
 
 def format_db_search(question):
