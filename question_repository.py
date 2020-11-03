@@ -53,8 +53,6 @@ def get_detail(id, conn):
         }
         cur.close()
 
-    conn.close()
-
     return answer
 
 
@@ -70,6 +68,7 @@ def save_question(id, question, ip, country, conn):
         cur.close()
 
     logger.info(sql.replace("%s", "{}").format(id, question, ip, country, date))
+
 
 def get_connetion():
     conn_string = "host=%s user=%s password=%s dbname=%s" % \

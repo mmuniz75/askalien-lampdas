@@ -1,10 +1,8 @@
 import logging
 import question_repository
+import country_repository
+import webclient
 import sys
-
-
-def get_country_from_ip(ip):
-    return "Not implemented"
 
 
 def lambda_handler(event, context):
@@ -14,9 +12,8 @@ def lambda_handler(event, context):
         id = event["id"]
         ip = event["ip"]
 
-        country = get_country_from_ip(ip)
-
         conn = question_repository.get_connetion()
+        country = get_country_from_ip(ip, conn)
         question_repository.save_question(id, question, ip, country, conn)
 
         return question_repository.get_detail(id, conn)
@@ -27,4 +24,14 @@ def lambda_handler(event, context):
     finally:
         if conn is not None:
             conn.close()
+
+
+def get_country_from_ip(ip, conn):
+    country = country_repository.get_country_fron_ip(ip, conn)
+
+    if country is None:
+        country = webclient.get_country_from_ip(ip)
+        country_repository.save_country(ip, country, conn)
+
+    return country
 
