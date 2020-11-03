@@ -3,7 +3,8 @@ import urllib3
 import logging
 import json
 
-wa_server_url = os.environ.get('WA_SERVER_URL')
+country_server_url = os.environ.get('COUNTRY_SERVER_URL')
+country_server_token = os.environ.get('COUNTRY_SERVER_TOKEN')
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
@@ -11,25 +12,23 @@ http = urllib3.PoolManager()
 
 
 def get_country_from_ip(ip):
-    return "casa"
+    headers = {'charset': "UTF-8"}
+    url = '{}/{}?access_key={}&format=1'
 
-
-def get_country_from_ip2(ip):
-    headers = {'phone': "teste"}
-    url = wa_server_url + '/{}/members'
-
-    result = []
+    country = "Unknown Country"
     try:
         response = http.request('GET',
-                                url.format("group"),
+                                url.format(country_server_url, ip, country_server_token),
                                 headers=headers,
                                 timeout=15,
                                 retries=False)
 
         result = json.loads(response.data.decode('utf-8'))
 
+        country = result['country_name'].upper()
+
     except Exception as inst:
         print(inst)
         logger.error(inst.args)
 
-    return result
+    return country

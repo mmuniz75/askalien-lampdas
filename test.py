@@ -23,7 +23,7 @@ class LampdaTestCase(unittest.TestCase):
         event = {
             "id" : 500,
             "question": "mars AND moon",
-            "ip" : "127.0.0.1"
+            "ip" : "1.1.187.76"
         }
         print(lambda_function2.lambda_handler(event, None))
 
