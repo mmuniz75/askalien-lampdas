@@ -14,9 +14,11 @@ def lambda_handler(event, context):
 
         conn = question_repository.get_connetion()
         country = get_country_from_ip(ip, conn)
-        question_repository.save_question(id, question, ip, country, conn)
+        question_id = question_repository.save_question(id, question, ip, country, conn)
 
-        return question_repository.get_detail(id, conn)
+        answer = question_repository.get_detail(id, conn)
+        answer['question_id'] = question_id
+        return answer
 
     except Exception as inst:
         logging.error("ERROR: {}".format(inst))
