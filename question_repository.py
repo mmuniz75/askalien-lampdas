@@ -70,6 +70,24 @@ def save_question(id, question, ip, country, conn):
     logger.info(sql.replace("%s", "{}").format(id, question, ip, country, date))
 
 
+def add_feedback(id, creator, email, feedback):
+    sql = """update question
+             set creator=%s,
+                 email=%s,
+                 feedback=%s 
+             where id=%s"""
+
+    conn = get_connetion()
+
+    with conn.cursor() as cur:
+        cur.execute(sql, (creator, email, feedback, id))
+        conn.commit()
+        cur.close()
+
+    conn.close()
+    logger.info(sql.replace("%s", "{}").format(creator, email, feedback, id))
+
+
 def get_connetion():
     conn_string = "host=%s user=%s password=%s dbname=%s" % \
                   (db_host, db_username, db_user_pwd, db_name)
