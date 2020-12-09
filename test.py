@@ -1,6 +1,7 @@
 import unittest
 import lambda_function
 import lambda_function2
+import lambda_function3
 import logging
 import sys
 
@@ -13,11 +14,13 @@ logger.addHandler(stream_handler)
 
 class LampdaTestCase(unittest.TestCase):
 
+
     def test_list_questions(self):
         event = {
                     "question": "mars AND moon"
                 }
         print(lambda_function.lambda_handler(event, None))
+
 
     def test_get_detail(self):
         event = {
@@ -26,6 +29,16 @@ class LampdaTestCase(unittest.TestCase):
             "ip" : "1.1.187.76"
         }
         print(lambda_function2.lambda_handler(event, None))
+
+
+    def test_addt_feedback(self):
+        event = {
+             "id": 144273,
+             "creator": "Muniz",
+             "email": "mmunizs1975@gmail.com",
+             "feedback": "very good"
+        }
+        print(lambda_function3.lambda_handler(event, None))
 
 
 if __name__ == '__main__':
