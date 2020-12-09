@@ -34,6 +34,7 @@ def get_questions(question):
 
 def get_detail(id, conn):
     query = """select  a.id,
+                       subject,
                        content,
                        videonumber as number,
                        creationdate as date,
@@ -46,10 +47,11 @@ def get_detail(id, conn):
         row = cur.fetchone()
         answer = {
             'id' : row[0],
-            "content": row[1],
-            "number": row[2],
-            "date": row[3].strftime("%m/%d/%Y"),
-            "link": row[4]
+            "question": row[1],
+            "content": row[2],
+            "number": row[3],
+            "date": row[4].strftime("%m/%d/%Y"),
+            "link": row[5]
         }
         cur.close()
 
