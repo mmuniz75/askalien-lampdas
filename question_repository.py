@@ -36,7 +36,7 @@ def get_detail(id, conn):
     query = """select  a.id,
                        subject,
                        content,
-                       videonumber as number,
+                       number,
                        creationdate as date,
                        url as link 
                        from Answer a INNER JOIN Video v on (a.videonumber=v.id)
